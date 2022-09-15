@@ -17,7 +17,7 @@ node{
     }
 
     stage('Push') {
-        docker.withRegistry('https://hub.docker.com,'dockerhub') { 
+        docker.withRegistry('https://hub.docker.com','dockerhub') { 
             img.push 'latest'
             img.push()
 	     }
