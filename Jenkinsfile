@@ -1,18 +1,25 @@
 node{
-  def app
+  def registryProject='aurelpere/jenkins-push' #username/repo pour dockerhub
+  def IMAGE="${registryProject}:version-${env.BUILD_ID}"
 
     stage('Clone') {
-        checkout scm
-    }
-
+        checkout scm    
+}
+   
     stage('Build image') {
-        app = docker.build("customtbl/nginx")
+        docker.build("$IMAGE", '.')
     }
 
-    stage('Test image') {
-        docker.image('customtbl/nginx').withRun('-p 80:80') { c ->
-        sh 'docker ps'
-        sh 'curl localhost'
+    stage('Run') {
+        img.withRun("--name run-$BUILD_ID -p 80:80") {c ->
+            sh 'curl localhost'
+            }
+    }
+
+    stage('Push') {
+        docker.withRegistry('https://hub.docker.com,'dockerhub') { 
+            img.push 'latest'
+            img.push()
 	     }
     }
 }
