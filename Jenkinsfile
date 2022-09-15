@@ -1,4 +1,5 @@
 node{
+  def customImage
   def registryProject='aurelpere/jenkins-push'
   def IMAGE="${registryProject}:version-${env.BUILD_ID}"
 
@@ -7,7 +8,7 @@ node{
 }
    
     stage('Build image') {
-        docker.build("$IMAGE", '.')
+        customImage=docker.build("$IMAGE", '.')
     }
 
     stage('Run') {
@@ -17,9 +18,8 @@ node{
     }
 
     stage('Push') {
-        docker.withRegistry('https://hub.docker.com','dockerhub') { 
-            img.push 'latest'
-            img.push()
+        docker.withRegistry('','dockerhub') { 
+        img.push()
 	     }
     }
 }
