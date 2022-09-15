@@ -1,5 +1,5 @@
 node{
-  def registryProject='aurelpere/jenkins-push' #username/repo pour dockerhub
+  def registryProject='aurelpere/jenkins-push'
   def IMAGE="${registryProject}:version-${env.BUILD_ID}"
 
     stage('Clone') {
