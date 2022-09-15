@@ -19,7 +19,7 @@ node{
 
     stage('Push') {
         docker.withRegistry('','dockerhub') { 
-        img.push()
+        customImage.push()
 	     }
     }
 }
