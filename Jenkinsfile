@@ -6,11 +6,11 @@ node{
     }
 
     stage('Build image') {
-        app = docker.build("customTBL/nginx")
+        app = docker.build("customtbl/nginx")
     }
 
     stage('Test image') {
-        docker.image('customTBL/nginx').withRun('-p 80:80') { c ->
+        docker.image('customtbl/nginx').withRun('-p 80:80') { c ->
         sh 'docker ps'
         sh 'curl localhost'
 	     }
