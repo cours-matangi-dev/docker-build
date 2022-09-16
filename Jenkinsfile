@@ -8,7 +8,7 @@ node{
 	}
 
 		stage('Build') {
-				sh 'docker build -t ${IMAGE} .'
+				sh "docker build -t $IMAGE ."
 		}
         stage('Run') {
                 sh 'docker run --name run-${BUILD-ID} -p 80:80 $IMAGE'
