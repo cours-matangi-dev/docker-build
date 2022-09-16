@@ -11,7 +11,7 @@ node{
 				sh "docker build -t $IMAGE ."
 		}
         stage('Run') {
-                sh "docker run --name run-$BUILD-ID -p 80:80 $IMAGE"
+                sh "docker run --name run-$BUILD_ID -p 80:80 $IMAGE"
                 sh 'curl localhost'
     }
 		stage('Login') {
