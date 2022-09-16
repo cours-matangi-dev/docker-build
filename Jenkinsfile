@@ -1,5 +1,4 @@
-node{
-    def customImage
+pipeline{
     def registryProject='aurelpere/jenkins-push'
     def IMAGE="${registryProject}:version-${env.BUILD_ID}"
 
