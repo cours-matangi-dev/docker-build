@@ -18,10 +18,10 @@ node{
 		stage('Push') {
 				sh "docker push $IMAGE"
 		}
-	}
+	
 	stage ('clean') {
 			sh 'docker logout'
             sh "docker rm -f run-$BUILD_ID"
 	}
-
+}
 
