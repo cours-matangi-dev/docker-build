@@ -19,11 +19,9 @@ node{
 				sh "docker push $IMAGE"
 		}
 	}
-	post {
-		always {
+	stage ('clean') {
 			sh 'docker logout'
             sh "docker rm -f run-$BUILD_ID"
-		}
 	}
 
 
