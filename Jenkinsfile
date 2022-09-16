@@ -17,7 +17,7 @@ pipeline{
 		}
         stage('Run') {
             steps {
-                sh 'docker run --name run-${BUILD-ID} -p 80:80 ${IMAGE}'
+                sh 'docker run -d --name run-${BUILD-ID} -p 80:80 ${IMAGE}'
                 sh 'curl localhost'
             }
     }
