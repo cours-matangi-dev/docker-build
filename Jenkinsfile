@@ -1,9 +1,10 @@
 pipeline{
-    def registryProject='aurelpere/jenkins-push'
-    def IMAGE="${registryProject}:version-${env.BUILD_ID}"
+    agent any
 
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+        registryProject='aurelpere/jenkins-push'
+        IMAGE="${registryProject}:version-${env.BUILD_ID}"
 	}
 
 	stages {
