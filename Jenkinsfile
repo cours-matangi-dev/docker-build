@@ -15,7 +15,7 @@ node{
 				sh 'docker build -t $IMAGE .'
 			}
 		}
-        stages('Run') {
+        stage('Run') {
             steps {
                 sh 'docker run --name run-$BUILD-ID -p 80:80 $IMAGE'
                 sh 'curl localhost'
