@@ -7,7 +7,6 @@ node{
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
 	}
 
-	stages {
 
 		stage('Build') {
 
@@ -43,4 +42,4 @@ node{
 		}
 	}
 
-}
+
