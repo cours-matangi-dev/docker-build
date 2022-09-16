@@ -11,7 +11,7 @@ node{
 				sh "docker build -t $IMAGE ."
 		}
         stage('Run') {
-                sh "docker run --name run-$BUILD_ID -p 80:80 $IMAGE"
+                sh "docker run -d --name run-$BUILD_ID -p 80:80 $IMAGE"
                 sh 'curl localhost'
     }
 		stage('Login') {
@@ -24,6 +24,7 @@ node{
 	post {
 		always {
 			sh 'docker logout'
+            sh "docker rm -f run-$BUILD_ID"
 		}
 	}
 
