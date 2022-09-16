@@ -8,7 +8,7 @@ node{
 	}
 
 		stage('Build') {
-                echo $IMAGE
+                sh 'echo $IMAGE'
 				sh 'docker build -t $IMAGE .'
 		}
         stage('Run') {
