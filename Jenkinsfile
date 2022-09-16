@@ -1,26 +1,46 @@
 node{
-  def customImage
-  def registryProject='aurelpere/jenkins-push'
-  def IMAGE="${registryProject}:version-${env.BUILD_ID}"
+    def customImage
+    def registryProject='aurelpere/jenkins-push'
+    def IMAGE="${registryProject}:version-${env.BUILD_ID}"
 
-    stage('Clone') {
-        checkout scm    
-}
-   
-    stage('Build image') {
-        customImage=docker.build("$IMAGE", '.')
-    }
+	environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub')
+	}
 
-    stage('Run') {
-        docker.image("$IMAGE").withRun("--name run-$BUILD_ID -p 80:80") {c ->
-            sh 'curl localhost'
+	stages {
+
+		stage('Build') {
+
+			steps {
+				sh 'docker build -t $IMAGE .'
+			}
+		}
+        stages('Run') {
+            steps {
+                sh 'docker run --name run-$BUILD-ID -p 80:80 $IMAGE'
+                sh 'curl localhost'
             }
     }
 
-    stage('Push') {
-        docker.withRegistry('','dockerhub') { 
-        customImage.push()
-	     }
-    }
-}
+		stage('Login') {
 
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+
+		stage('Push') {
+
+			steps {
+				sh 'docker push $IMAGE'
+			}
+		}
+	}
+
+	post {
+		always {
+			sh 'docker logout'
+		}
+	}
+
+}
